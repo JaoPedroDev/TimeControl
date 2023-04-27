@@ -3,10 +3,11 @@ package com.timecontrolgui;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
@@ -83,9 +84,9 @@ public final class Form {
         return html;
     }
 
-    public static String htmlTemplate(String nome, String setor, String numeroDoMes, String ultimoDiaDoMes,
+    public String htmlTemplate(String nome, String setor, String numeroDoMes, String ultimoDiaDoMes,
             String table) throws IOException {
-        String html = readFile("./src/main/resources/com/timecontrolgui/template.html");
+        String html = readFile("/com/timecontrolgui/template.html");
         html = html.replaceAll("\\{NOME_ESTAGIARIO\\}", nome);
         html = html.replaceAll("\\{SETOR\\}", setor);
         html = html.replaceAll("\\{NUMERO_DO_MES\\}", numeroDoMes);
@@ -104,13 +105,14 @@ public final class Form {
         }
     }
 
-    public static String readFile(String path) throws IOException {
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(path), "UTF-8"))) {
+    public String readFile(String path) throws IOException {
+        try (InputStream inputStream = getClass().getResourceAsStream(path);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                BufferedReader br = new BufferedReader(inputStreamReader);) {
+
             String file = new String();
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 file += line;
             }
             System.out.println("File read successfully");
