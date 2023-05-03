@@ -1,10 +1,12 @@
 package com.timecontrolgui;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -27,7 +29,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // create a label
         Label nomeLabel = new Label("Nome");
         TextField nomeTextField = new TextField();
         nomeTextField.setPromptText("Ex. João Pedro");
@@ -49,6 +50,12 @@ public class App extends Application {
         Label feriadosLabel = new Label("Dias de Férias");
         TextField feriadosTextField = new TextField();
         feriadosTextField.setPromptText("Ex. 1, 2, 5, 7");
+
+        String meses[] = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro",
+                "Outubro", "Novembro", "Dezembro" };
+        Label mesLabel = new Label("Mês");
+        ComboBox<String> mesComboBox = new ComboBox<>(FXCollections.observableArrayList(meses));
+        mesComboBox.setValue("Janeiro");
 
         Label pastaSalvarLabel = new Label("Pasta para salvar");
         DirectoryChooser pastaSalvarDirectoryChooser = new DirectoryChooser();
@@ -73,7 +80,8 @@ public class App extends Application {
                     feriadosTextField.getText(),
                     pastaSelecionadaLabel.getText(),
                     horaEntradaTextField.getText(),
-                    horaSaidaTextField.getText());
+                    horaSaidaTextField.getText(),
+                    mesComboBox.getValue());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Time Control");
@@ -102,16 +110,17 @@ public class App extends Application {
         gridPane.add(feriadosLabel, 0, 4);
         gridPane.add(feriadosTextField, 1, 4, 2, 1);
         // Row 6
-        gridPane.add(pastaSalvarLabel, 0, 5);
-        gridPane.add(pastaSalvarButton, 1, 5);
-        gridPane.add(pastaSelecionadaLabel, 2, 5);
+        gridPane.add(mesLabel, 0, 5);
+        gridPane.add(mesComboBox, 1, 5, 2, 1);
         // Row 7
-        gridPane.add(criarFormulatiroButton, 0, 6, 3, 1);
+        gridPane.add(pastaSalvarLabel, 0, 6);
+        gridPane.add(pastaSalvarButton, 1, 6);
+        gridPane.add(pastaSelecionadaLabel, 2, 6);
+        // Row 8
+        gridPane.add(criarFormulatiroButton, 0, 7, 3, 1);
 
-        // create a scene with the layout container
-        Scene scene = new Scene(gridPane, 500, 250);
+        Scene scene = new Scene(gridPane, 500, 280);
 
-        // set the scene on the stage and show it
         stage.getIcons()
                 .add(new Image(getClass().getResourceAsStream("/com/timecontrolgui/icon.png")));
         stage.setResizable(false);
@@ -127,7 +136,7 @@ public class App extends Application {
     }
 
     public static void criarFormulario(String nome, String setor, String feriados, String pastaSalvar,
-            String horaEntrada, String horaSaida) {
+            String horaEntrada, String horaSaida, String mes) {
         System.out.println("Nome: " + nome);
         System.out.println("Setor: " + setor);
         System.out.println("Feriados: " + feriados);
@@ -144,7 +153,7 @@ public class App extends Application {
             }
         }
 
-        Form newForm = new Form(nome, setor, feriadosIntArray, pastaSalvar, horaEntrada, horaSaida);
+        Form newForm = new Form(nome, setor, feriadosIntArray, pastaSalvar, horaEntrada, horaSaida, mes);
 
         try {
             newForm.createForm();

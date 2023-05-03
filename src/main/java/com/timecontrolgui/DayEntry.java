@@ -17,7 +17,9 @@ public class DayEntry {
         int randomEntradaMinutes = random.nextInt(6) + 54;
         int randomSaidaMinutes = random.nextInt(6);
 
-        this.entrada = String.format("%s:%d", horaEntrada, randomEntradaMinutes);
+        String horaEntradaMinusOne = Integer.toString(Integer.parseInt(horaEntrada) - 1);
+
+        this.entrada = String.format("%s:%d", horaEntradaMinusOne, randomEntradaMinutes);
         this.saida = String.format("%s:0%d", horaSaida, randomSaidaMinutes);
     }
 }

@@ -1,7 +1,10 @@
 package com.timecontrolgui;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
+import java.time.Month;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.io.BufferedReader;
@@ -19,15 +22,17 @@ public final class Form {
     public String pastaSalvar;
     public String entradaHora;
     public String saidaHora;
+    public String mes;
 
     public Form(String nome, String setor, int[] feriadosDoMes, String pastaSalvar, String entradaHora,
-            String saidaHora) {
+            String saidaHora, String mes) {
         this.nome = nome;
         this.setor = setor;
         this.feriadosDoMes = feriadosDoMes;
         this.pastaSalvar = pastaSalvar + "/form.html";
         this.entradaHora = entradaHora;
         this.saidaHora = saidaHora;
+        this.mes = mes;
     }
 
     public void createForm() throws IOException {
@@ -36,11 +41,11 @@ public final class Form {
         int[] feriadosDoMes = this.feriadosDoMes;
         String pastaSalvar = this.pastaSalvar;
 
-        LocalDate date = LocalDate.now();
+        Month month = getMonth(this.mes);
 
-        LocalDate firstDayOfMonth = date.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDate firstDayOfMonth = LocalDate.of(2023, month, 1);
 
-        int monthNumberOfDays = date.lengthOfMonth();
+        int monthNumberOfDays = YearMonth.of(2023, month).lengthOfMonth();
         int startingWeekDayNumber = firstDayOfMonth.getDayOfWeek().getValue();
 
         String tableRows = new String();
@@ -60,8 +65,8 @@ public final class Form {
             tableRows += tableRow(newDay.dia, newDay.entrada, newDay.saida);
         }
 
-        String numeroDoMes = date.getMonthValue() < 10 ? String.format("0%d", date.getMonthValue())
-                : String.valueOf(date.getMonthValue());
+        String numeroDoMes = month.getValue() < 10 ? String.format("0%d", month.getValue())
+                : String.valueOf(month.getValue());
 
         writeFile(htmlTemplate(
                 nome,
@@ -127,5 +132,10 @@ public final class Form {
             }
         }
         return false;
+    }
+
+    public static Month getMonth(String monthName) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM", new Locale("pt", "BR"));
+        return Month.from(formatter.parse(monthName));
     }
 }
