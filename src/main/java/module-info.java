@@ -1,9 +1,9 @@
-// module com.timecontrolgui {
-// requires transitive javafx.graphics;
-// requires javafx.controls;
-// requires javafx.fxml;
+module com.timecontrolgui {
+    requires transitive javafx.graphics;
+    requires javafx.controls;
+    requires javafx.fxml;
 
-// opens com.timecontrolgui to javafx.fxml;
+    opens com.timecontrolgui to javafx.fxml;
 
-// exports com.timecontrolgui;
-// }
+    exports com.timecontrolgui;
+}

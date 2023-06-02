@@ -135,7 +135,7 @@ public class App extends Application {
         launch();
     }
 
-    public static void criarFormulario(String nome, String setor, String feriados, String pastaSalvar,
+    public void criarFormulario(String nome, String setor, String feriados, String pastaSalvar,
             String horaEntrada, String horaSaida, String mes) {
         System.out.println("Nome: " + nome);
         System.out.println("Setor: " + setor);
