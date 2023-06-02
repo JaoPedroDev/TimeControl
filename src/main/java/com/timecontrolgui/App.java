@@ -119,11 +119,11 @@ public class App extends Application {
         // Row 8
         gridPane.add(criarFormulatiroButton, 0, 7, 3, 1);
 
-        Scene scene = new Scene(gridPane, 500, 280);
+        Scene scene = new Scene(gridPane, 500, 320);
 
         stage.getIcons()
                 .add(new Image(getClass().getResourceAsStream("/com/timecontrolgui/icon.png")));
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setTitle("Time Control");
         stage.setScene(scene);
         stage.show();
