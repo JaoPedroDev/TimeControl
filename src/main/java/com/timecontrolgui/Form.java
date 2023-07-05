@@ -32,7 +32,7 @@ public final class Form {
         this.pastaSalvar = pastaSalvar + "/form.html";
         this.entradaHora = entradaHora;
         this.saidaHora = saidaHora;
-        this.mes = mes;
+        this.mes = mes.toLowerCase();
     }
 
     public void createForm() throws IOException {

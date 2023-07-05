@@ -141,6 +141,9 @@ public class App extends Application {
         System.out.println("Setor: " + setor);
         System.out.println("Feriados: " + feriados);
         System.out.println("Pasta Salvar: " + pastaSalvar);
+        System.out.println("Hora Entrada: " + horaEntrada);
+        System.out.println("Hora Saida: " + horaSaida);
+        System.out.println("Mês: " + mes);
 
         String[] feriadosArray = feriados.split(",");
         int[] feriadosIntArray = new int[feriadosArray.length];
